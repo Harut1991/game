@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import { StyleSheet, View, Text } from "react-native";
+import {StyleSheet, View, Text, Dimensions} from "react-native";
 import HeartEmptySVG from "../Icons/HeartEmptySVG";
 import Heart025SVG from "../Icons/Heart025SVG";
 import Heart05SVG from "../Icons/Heart05SVG";
@@ -7,7 +7,7 @@ import Heart075SVG from "../Icons/Heart075SVG";
 import HeartFullSVG from "../Icons/HeartFullSVG";
 import {defaultHeart} from "../Classes/complecations";
 const heart = defaultHeart;
-
+const {height} = Dimensions.get('window');
 export default function Scoring({score}) {
     if (score === 0) {
         return (
@@ -42,9 +42,9 @@ const styles = StyleSheet.create({
     },
     heart: {
         position: 'absolute',
-        top: 5,
+        top: height/135,
         left: 2,
-        fontSize: 15,
+        fontSize: height/60,
         color: '#FCAD51'
     }
 });
