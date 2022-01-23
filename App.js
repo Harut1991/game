@@ -62,7 +62,7 @@ export default function App() {
     }, [setEffect, setScore, setLevel]);
 
     const currentLevelChangeHandler = useCallback(async () => {
-      if (currentLevel && currentLevel%3 === 0) {
+      if (currentLevel && ((currentLevel > 3 && currentLevel%3 === 0) || currentLevel === 4)) {
           try{
               await AdMobInterstitial.requestAdAsync();
               await AdMobInterstitial.showAdAsync();

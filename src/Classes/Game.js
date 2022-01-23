@@ -37,7 +37,7 @@ export default class GameClass {
             data.push([]);
             for(let j=0; j< complicationConfig.ballCount; j++){
                 let rand = Math.floor(Math.random() * (9) + 1);
-                if (this.level >= 30 && this.level%2 === 0 && j === complicationConfig.ballCount-1){
+                if (this.level >= 29 && j === complicationConfig.ballCount-1){
                     if (total < 9) {
                         rand = Math.floor(Math.random() * (total-1) + 1) * -1;
                     } else {
