@@ -27,7 +27,9 @@ export default function SettingsModal({
                 <View style={styles.modalView}>
                     <View
                         style={styles.container}>
-                        <Pressable onPress={() => setModalVisible(false)}><CloseSVG /></Pressable>
+                        <Pressable style={{ height: '100%', width: '100%', position: 'relative'}} onPress={() => setModalVisible(false)}>
+                            <View style={{position: 'absolute', top: 8, left: 9}}><CloseSVG /></View>
+                        </Pressable>
                     </View>
                     <ImageBackground
                         source={Background} style={styles.img}
@@ -82,7 +84,9 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        position: 'absolute', right: -10, top: -10, zIndex: 2,
+        position: 'absolute',
+        right: -10, top: -10,
+        zIndex: 2,
         backgroundColor: '#FCAD51',
         height: 30, width: 30, borderRadius: 50
     },
