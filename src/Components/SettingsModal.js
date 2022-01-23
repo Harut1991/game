@@ -1,6 +1,6 @@
 import React from "react";
 
-import {Modal, StyleSheet, View, Text, Pressable, ImageBackground} from "react-native";
+import {Modal, StyleSheet, View, Text, Pressable, ImageBackground, Dimensions} from "react-native";
 import LineSettingsSVG from "../Icons/LineSettingsSVG";
 import Background from "../../assets/settings.png";
 import EffectOffSVG from "../Icons/EffectOffSVG";
@@ -9,7 +9,7 @@ import SoundOffSVG from "../Icons/SoundOffSVG";
 import SoundOnSVG from "../Icons/SoundOnSVG";
 import CloseSVG from "../Icons/CloseSVG";
 import {useFonts} from "expo-font";
-
+const {height} = Dimensions.get('window');
 export default function SettingsModal({
          modalVisible, setModalVisible,
          sound, effect,
@@ -37,13 +37,13 @@ export default function SettingsModal({
                             <View>
                                 <View style={styles.imgContainer}>
                                     <Text style={{ paddingTop: 6, marginRight: 7}}><LineSettingsSVG /></Text>
-                                    {loaded && <Text style={{ fontSize: 22, fontFamily: "MochiyPopOne", color: '#FCAD51'}}>Settings</Text>}
+                                    {loaded && <Text style={{ fontSize: height/50, fontFamily: "MochiyPopOne", color: '#FCAD51'}}>Settings</Text>}
                                     <Text  style={{ paddingTop: 6, marginLeft: 7}}><LineSettingsSVG /></Text>
                                 </View>
                                 <View style={{paddingRight: 45, paddingLeft: 45, marginTop: 20}}>
                                     <Pressable onPress={onSound}>
                                         <View style={{backgroundColor: '#FCAD51', borderRadius: 5, paddingLeft: 20, paddingTop: 5, paddingBottom: 6}}>
-                                            {loaded && <Text style={{fontSize: 16, fontFamily: "MochiyPopOne", color: 'white'}}>Sound</Text>}
+                                            {loaded && <Text style={{fontSize: 13, fontFamily: "MochiyPopOne", color: 'white'}}>Sound</Text>}
                                             <View style={{position: 'absolute', right: 11, top: 5}}>
                                                 {sound ? <SoundOnSVG />: <SoundOffSVG />}
                                             </View>
@@ -52,7 +52,7 @@ export default function SettingsModal({
 
                                     <Pressable onPress={onEffect}>
                                         <View style={{marginTop: 20, backgroundColor: '#FCAD51', borderRadius: 5, paddingLeft: 20, paddingTop: 5, paddingBottom: 6}}>
-                                            <Text style={{fontSize: 16, fontFamily: "MochiyPopOne", color: 'white'}}>Effects</Text>
+                                            <Text style={{fontSize: 13, fontFamily: "MochiyPopOne", color: 'white'}}>Effects</Text>
                                             <View style={{position: 'absolute', right: 21, top: 8}}>
                                                 {effect ? <EffectOnSVG />: <EffectOffSVG />}
                                             </View>
@@ -75,8 +75,9 @@ const styles = StyleSheet.create({
         marginTop: 17
     },
     img: {
-        width: '100%',
-        height: '100%',
+        paddingBottom: 20,
+        // width: '100%',
+        // height: '100%',
         borderRadius: 10,
         overflow: 'hidden'
     },
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
         width: '60%',
-        height: 190,
+        // height: height*20/100,
     }
 });
 

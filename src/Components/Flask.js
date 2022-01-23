@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, Pressable, StyleSheet, Text, View} from 'react-native';
 import Ball from './Ball';
 import BottomSVG from "../Icons/BottomSVG";
 import BottomSmallSVG from "../Icons/BottomSmallSVG";
+const {height} = Dimensions.get('window');
 
 export default function Flask({size, clickedBall, onClick, ball, config, total, isSuccess, totalRow, ind}) {
     const currentTotal = useMemo(()=>{
@@ -31,10 +32,10 @@ export default function Flask({size, clickedBall, onClick, ball, config, total, 
                             position: 'absolute',
                             textAlign: 'center',
                             width: '90%',
-                            top: size.ball === 55 ? 11: 7,
+                            top: size.ball === 55 ? height/75: height/115,
                             paddingLeft: size.ball === 55 ? 0: 5,
                             fontWeight: 'bold',
-                            fontSize: size.ball === 55 ? 18: 16
+                            fontSize: size.ball === 55 ? height/55: height/65
                         }
                     }>
                             <>

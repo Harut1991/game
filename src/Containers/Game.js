@@ -251,14 +251,14 @@ export default function Game({level, onNext, effect, addRow, totalRow, onRefresh
 
 const styles = StyleSheet.create({
     main: {
-        marginBottom: 60,
+        marginBottom: 45,
         justifyContent: "space-between",
         flexDirection: "row",
     },
     container: {
         fontFamily: "MochiyPopOne",
         color: 'white',
-        fontSize: 35,
+        fontSize: 25,
         textAlign: 'center'
     }
 });

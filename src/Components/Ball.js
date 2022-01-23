@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {View, Text, StyleSheet} from "react-native";
-
+import {View, Text, StyleSheet, Dimensions} from "react-native";
+const {height} = Dimensions.get('window');
 export default function Ball({num, clickedBall, size}) {
     return (
         <View style={{...styles.ball, ...clickedBall? styles.clickedBall: {},
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
     txt: {
-        fontSize: 22,
+        fontSize: height/45,
         fontWeight: 'bold'
     },
     num: {

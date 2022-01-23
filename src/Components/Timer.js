@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {Text} from "react-native";
-
 function Timer({time, onFailHandler, win, setRestTime}) {
     const [currentTime, setCurrentTime] = useState(null);
 
@@ -39,7 +38,7 @@ function Timer({time, onFailHandler, win, setRestTime}) {
     useEffect(timeHandler, [currentTime, win]);
     useEffect(() => setCurrentTime(time.time), [time]);
 
-    return (  <Text style={{fontSize: 20, color: dangerous ? 'red':  '#FCAD51'}}> {minutes}:{seconds}</Text> );
+    return (  <Text style={{fontSize: 15, color: dangerous ? 'red':  '#FCAD51'}}> {minutes}:{seconds}</Text> );
 }
 
 export default Timer;
