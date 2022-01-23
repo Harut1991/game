@@ -1,23 +1,7 @@
+import {getComplication} from './complecations';
 export default class GameClass {
     data;
     currentComplications;
-    complications = [
-        {
-            level: [1, 2],
-            flaskCount:2,
-            ballCount:2
-        },
-        {
-            level: [2, 3],
-            flaskCount:3,
-            ballCount:2
-        },
-        {
-            level: [3, 4],
-            flaskCount:4,
-            ballCount:2
-        }
-    ]
     level = 0;
 
     mixData(data){
@@ -52,7 +36,14 @@ export default class GameClass {
             let total = 0;
             data.push([]);
             for(let j=0; j< complicationConfig.ballCount; j++){
-                const rand = Math.floor(Math.random() * (9) + 1);
+                let rand = Math.floor(Math.random() * (9) + 1);
+                if (this.level >= 30 && this.level%2 === 0 && j === complicationConfig.ballCount-1){
+                    if (total < 9) {
+                        rand = Math.floor(Math.random() * (total-1) + 1) * -1;
+                    } else {
+                        rand = rand*-1;
+                    }
+                }
                 total+= rand;
                 data[i].push(rand)
             }
@@ -71,19 +62,21 @@ export default class GameClass {
         this.data = { actualData, mixedData, flaskTotal};
     }
 
+    addRow(){
+        this.data.actualData.push([]);
+        this.data.mixedData.push([]);
+        return this.data;
+    }
+
     start(level){
         this.level = level;
         this.data = null;
         this.currentComplications = null;
-        const complicationConfig = this.getComplication(this.level);
+        const complicationConfig = getComplication(this.level);
         if (complicationConfig){
             this.currentComplications = complicationConfig;
             this.makeLevel(complicationConfig);
         }
-    }
-
-    getComplication(level){
-        return this.complications.find(i => level >= i.level[0] && level < i.level[1]);
     }
     
     canSet(index){
@@ -99,7 +92,7 @@ export default class GameClass {
 
     checkWin(data, flaskTotal){
         const obj = {};
-        for(let i = 0; i< data.length-1;i++){
+        for(let i = 0; i< this.currentComplications.flaskCount;i++){
             obj[i] = !!(data[i].length === this.currentComplications.ballCount && data[i].reduce((accumulator, curr) => accumulator + curr) === flaskTotal[i])
         }
         return obj;

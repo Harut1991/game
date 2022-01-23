@@ -1,21 +1,42 @@
-import { StyleSheet, View } from "react-native";
+import React from 'react';
 
-export default function Ball({num, clickedBall}) {
+import {View, Text, StyleSheet} from "react-native";
+
+export default function Ball({num, clickedBall, size}) {
     return (
-        <View style={[styles.ball, clickedBall? styles.clickedBall: {} ]}>
-           {num}
+        <View style={{...styles.ball, ...clickedBall? styles.clickedBall: {},
+            height: size.ball, width: size.ball,...(num >0 ? {}: {backgroundColor: '#f1b873'})}}>
+            <View style={styles.num}>
+                <Text style={styles.txt}>{num}</Text>
+            </View>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     ball: {
-        borderRadius: 50,
-        borderStyle: 'solid',
-        borderWidth: 1,
-        padding: 3,
+        borderRadius: 7,
+        backgroundColor: '#FCAD51',
+        flex: 1,
+        opacity: 0.93,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        marginTop: 5
+    },
+    txt: {
+        fontSize: 22,
+        fontWeight: 'bold'
+    },
+    num: {
+        position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     clickedBall: {
-        backgroundColor: 'red'
+        // backgroundColor: 'black',
+        borderColor: '#E1E1E1',
+        opacity: 1,
+        borderWidth: 2.7,
     }
 });

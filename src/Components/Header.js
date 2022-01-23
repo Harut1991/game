@@ -1,64 +1,143 @@
 import React from 'react';
 import { useCallback, useEffect, useState } from 'react/cjs/react.development';
-import SettingsModal from './SettingsModal';
-import ReactHowler from 'react-howler';
-import newSound from '../../assets/sound.mp3';
+// import SettingsModal from './SettingsModal';
 import useStorage from '../Hooks/useStorage';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
+// import {getComplication} from "../Classes/complecations";
+// import SettingsSVG from "../Icons/SettingSVG";
+// import RefreshSVG from "../Icons/RefreshSVG";
+// import AddRowSVG from "../Icons/AddRowSVG";
+import { Audio } from 'expo-av';
+// import Scoring from "./Scoring";
+import {AdMobRewarded} from "expo-ads-admob";
 
-
-export default function Header({level, effect, setEffect}) {
+export default function Header({score, level, effect, setEffect, setAddRow, addRow, setRefresh}) {
     const {getData, storeData} = useStorage();
-
-    const [modalVisible, setModalVisible] = useState(false);
+    //
+    // const [modalVisible, setModalVisible] = useState(false);
     const [sound, setSound] = useState(false);
+    const [music, setMusic] = useState(null);
+    //
+    // const onSound = useCallback(async () => {
+    //     try{
+    //         await storeData('sound', (!sound).toString());
+    //         setSound(!sound);
+    //     }catch (e) {
+    //         console.log(e);
+    //     }
+    // }, [setSound, sound, storeData]);
+    //
+    // const onEffect = useCallback(async () => {
+    //     try{
+    //         await storeData('effect', (!effect).toString());
+    //         setEffect(!effect);
+    //     }catch (e) {
+    //         console.log(e);
+    //     }
+    // }, [setEffect, effect, storeData]);
+    //
+    // const soundChangeHandler = useCallback(async ()=> {
+    //     try{
+    //         if (music){
+    //             if (sound){
+    //                 console.log(music)
+    //                 await music.playAsync();
+    //             } else {
+    //                 await music.stopAsync();
+    //             }
+    //         }
+    //
+    //     }catch (e) {
+    //         console.log(e)
+    //     }
+    // }, [sound, music]);
+    //
+    // const initRewardAds = async () => {
+    //     try{
+    //         await AdMobRewarded.requestAdAsync();
+    //         await AdMobRewarded.showAdAsync();
+    //     }catch (e) { }
+    // };
+    //
+    const init = useCallback(async () => {
+        try{
+            const { sound } = await Audio.Sound.createAsync(
+                require('../../assets/sound.mp3')
+            );
+            await sound.setVolumeAsync(0.3);
+            await sound.setIsLoopingAsync(true);
+            setMusic(sound);
+            const canS = (await getData('sound')) === 'true';
+            setSound(canS);
+            await AdMobRewarded.setAdUnitID("ca-app-pub-3940256099942544/5224354917");
+        }catch (e) {
+            console.log(e);
+        }
+        AdMobRewarded.addEventListener("rewardedVideoUserDidEarnReward", () =>{
+            setAddRow(true);
+        });
+    }, [setMusic, sound, getData, setSound, setAddRow]);
+    //
+    // useEffect(soundChangeHandler, [sound, music]);
+    useEffect(init, []);
 
-    const onSound = useCallback(() => {
-        storeData('sound', !sound);
-        setSound(!sound);
-    }, [setSound, sound, storeData]);
-
-    const onEffect = useCallback(() => {
-        storeData('effect', !effect);
-        setEffect(!effect);
-    }, [setEffect, effect, storeData]);
-
-    const soundChangeHandler = useCallback(()=> {
-        
-    }, [sound]);
-
-    useEffect(soundChangeHandler, [sound]);
-    useEffect(() => {
-        getData('sound').then(t => setSound(t === 'true'))
-      }, []);
-      
     return (
         <View>
-            {/* <ReactHowler src={newSound} playing={sound} volume={0.5} loop /> */}
             <View style={styles.header}>
-                <View onClick={() => setModalVisible(true)}>settings</View>
-                <View>{level ? `Level ${level}`: ''}</View>
-                <View>x</View>
+                <View style={styles.flex}>
+                    {/*<View>*/}
+                    {/*    <Pressable onPress={() => setModalVisible(true)}>*/}
+                    {/*        <SettingsSVG  />*/}
+                    {/*    </Pressable>*/}
+                    {/*</View>*/}
+                    {/*<View style={styles.flexRow}>*/}
+                    {/*    {!!level &&*/}
+                    {/*        <View style={{marginLeft: 15}}>*/}
+                    {/*            <Pressable onPress={() => setRefresh(true)}>*/}
+                    {/*                <RefreshSVG />*/}
+                    {/*            </Pressable>*/}
+                    {/*        </View>*/}
+                    {/*    }*/}
+                    {/*    {!!level && !addRow && getComplication(level) && getComplication(level).addRow &&*/}
+                    {/*        <View style={{marginLeft: 15}}>*/}
+                    {/*            <Pressable onPress={initRewardAds}>*/}
+                    {/*                <AddRowSVG />*/}
+                    {/*            </Pressable>*/}
+                    {/*        </View>*/}
+                    {/*    }*/}
+                    {/*    <View style={{marginLeft: 15}}>*/}
+                    {/*        <Scoring score={score} />*/}
+                    {/*    </View>*/}
+                    {/*</View>*/}
+                </View>
             </View>
-            {modalVisible && <SettingsModal 
-                sound={sound}
-                effect={effect}
-                onSound={onSound}
-                onEffect={onEffect} 
-                setModalVisible={setModalVisible} 
-                modalVisible={modalVisible}
-              />}
+
+            {/*{modalVisible &&*/}
+            {/*    <SettingsModal*/}
+            {/*        sound={sound}*/}
+            {/*        effect={effect}*/}
+            {/*        onSound={onSound}*/}
+            {/*        onEffect={onEffect}*/}
+            {/*        setModalVisible={setModalVisible}*/}
+            {/*        modalVisible={modalVisible}*/}
+            {/*      />*/}
+            {/*}*/}
         </View>
     );
 }
+
+
 const styles = StyleSheet.create({
     header: {
-        paddingTop: '4vh',
-        height: '8vh',
-        flex: 1,
+        paddingTop: 50,
+        paddingLeft: 20,
+        paddingRight: 20
+    },
+    flex: {
         flexDirection: "row",
-        flexWrap: "wrap",
-        alignItems: "center",
-        alignContent: "space-between",
+        justifyContent: "space-between"
+    },
+    flexRow: {
+        flexDirection: "row"
     }
 });

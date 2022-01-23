@@ -1,15 +1,14 @@
-import { StyleSheet, View } from "react-native";
+import React from 'react';
+import { View } from "react-native";
+import {AdMobBanner} from "expo-ads-admob";
 
 export default function Footer() {
-
     return (
-        <View style={styles.footer}>
-            sdsd
+        <View>
+            <AdMobBanner
+                bannerSize="fullBanner"
+                adUnitID="ca-app-pub-3940256099942544/6300978111"
+            />
         </View>
     );
 }
-const styles = StyleSheet.create({
-    footer: {
-        height: '8vh'
-    }
-});

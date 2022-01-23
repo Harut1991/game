@@ -1,52 +1,126 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
-import Game from './src/Containers/Game';
-import Start from './src/Containers/Start';
+import React from 'react';
 
-import Header from './src/Components/Header';
-import Footer from './src/Components/Footer';
-import useStorage from './src/Hooks/useStorage';
+import { StyleSheet, ImageBackground, View, Dimensions, Text} from 'react-native';
+import {useCallback, useEffect, useState} from "react";
+import useStorage from "./src/Hooks/useStorage";
+import Header from "./src/Components/Header";
+import Footer from "./src/Components/Footer";
+import Background from "./assets/back.jpg";
+import Start from "./src/Containers/Start";
+import Game from "./src/Containers/Game";
+import {useFonts} from "expo-font";
+import {
+    AdMobInterstitial, AdMobRewarded
+} from "expo-ads-admob";
 
-
+const {width, height} = Dimensions.get('window');
 
 export default function App() {
-  const {getData} = useStorage();
-  
-  const [level, setLevel] = useState(1);
-  const [effect, setEffect] = useState(false);
-  
+    const {getData, storeData} = useStorage();
+    const [score, setScore] = useState(0);
+    const [loaded] = useFonts({
+        MochiyPopOne: require('./assets/MochiyPopOne-Regular.ttf'),
+    });
 
-  console.log(effect)
-  const [currentLevel, setCurrentLevel] = useState(0);
-  const onStart = useCallback(()=>{
-    setCurrentLevel(level);
-  }, [setCurrentLevel]);
+    const [currentLevel, setCurrentLevel] = useState(0);
 
-  const onNext = useCallback(()=>{
-    setCurrentLevel(currentLevel+1);
-  }, [setCurrentLevel, currentLevel ]);
+    const [onRefresh, setOnRefresh] = useState(0);
+    const [effect, setEffect] = useState(false);
+    const [restTime, setRestTime] = useState(0);
+    const [addRow, setAddRow] = useState(false);
+    const [level, setLevel] = useState(null);
 
-  useEffect(() => {
-    getData('effect').then(t => setEffect(t === 'true'))
-  }, []);
+    const onStart = useCallback(()=>{
+        setCurrentLevel(level);
+    }, [setCurrentLevel, level]);
 
-  return (
-    <View style={styles.gameContainer}>
-        <Header level={currentLevel} effect={effect} setEffect={setEffect} />
-        <View style={styles.content}>
-          {!currentLevel && <Start level={level} onStart={onStart} />}
-          {!!currentLevel && <Game effect={effect} onNext={onNext} level={currentLevel}/>}
-        </View>
-        <Footer />
-    </View>
-  );
+    const onNext = useCallback(()=>{
+        setCurrentLevel(currentLevel+1);
+        const newScore = score + restTime;
+        setScore(newScore);
+        setAddRow(false);
+        setRestTime(0);
+    }, [setCurrentLevel, currentLevel, setAddRow, restTime, setRestTime, setScore]);
+
+    const setRefresh = useCallback(() => {
+        if (currentLevel) {
+            setAddRow(false);
+            currentLevel && setOnRefresh(onRefresh+1);
+        }
+    }, [currentLevel, setOnRefresh, onRefresh, setAddRow    ]);
+
+    const onInit = useCallback(async () => {
+        try{
+            await AdMobInterstitial.setAdUnitID('ca-app-pub-3940256099942544/1033173712');
+            const sound = await getData('effect');
+            const score = await getData('score');
+            const lev = await getData('level');
+            setEffect(sound === 'true');
+            setScore(score || 0);
+            // setLevel(30);
+            setLevel(lev && lev > 0 ? lev: 1);
+        }catch (e) { }
+    }, [setEffect, setScore, setLevel]);
+
+    const currentLevelChangeHandler = useCallback(async () => {
+      if (currentLevel && currentLevel%3 === 0) {
+          try{
+              await AdMobInterstitial.requestAdAsync();
+              await AdMobInterstitial.showAdAsync();
+          }catch (e) { }
+      }
+      try{
+          if(currentLevel){
+              await storeData('level', currentLevel.toString());
+          }
+      }catch (e) {
+          console.log(e);
+      }
+    }, [currentLevel, currentLevel]);
+
+    useEffect(onInit, []);
+    useEffect(currentLevelChangeHandler, [currentLevel]);
+
+    return (
+      <View style={styles.container}>
+          <ImageBackground source={Background} style={styles.imgStyle} imageStyle={{resizeMode: 'repeat'}}>
+              <View style={{width: width, height: 100}}>
+                  <Header score={score} setRefresh={setRefresh} addRow={addRow} level={currentLevel} setAddRow={setAddRow} effect={effect} setEffect={setEffect} />
+              </View>
+              <View style={{width: width, height: height - 125, padding: 25}}>
+                  {!currentLevel && loaded &&
+                      <Start
+                          level={level}
+                          onStart={onStart}
+                      />
+                  }
+                  {!!currentLevel &&
+                      <Game
+                          score={score}
+                          setScore={setScore}
+                          setRestTime={setRestTime}
+                          onRefresh={onRefresh}
+                          addRow={addRow}
+                          effect={effect}
+                          onNext={onNext}
+                          level={currentLevel}
+                      />
+                  }
+              </View>
+              <View style={{ height: 70}}>
+                  <Footer />
+              </View>
+          </ImageBackground>
+      </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  gameContainer: {
-    height: '100vh'
-  },
-  content: {
-    height: '80vh'
-  }
+    imgStyle: {
+        width: '100%',
+        height: '100%'
+    },
+    container: {
+        flex: 1
+    }
 });
