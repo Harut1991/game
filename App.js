@@ -57,8 +57,7 @@ export default function App() {
             const lev = await getData('level');
             setEffect(sound === 'true');
             setScore(score || 0);
-            // setLevel(30);
-            setLevel(lev && lev > 0 ? lev: 1);
+            setLevel(lev && lev > 0 ? +lev: 1);
         }catch (e) { }
     }, [setEffect, setScore, setLevel]);
 
