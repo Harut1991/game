@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect} from "react";
 import {Modal, StyleSheet, View, Text, Pressable, ImageBackground} from "react-native";
 import {useFonts} from "expo-font";
 import Background from "../../assets/fail.png";
