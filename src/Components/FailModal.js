@@ -7,7 +7,7 @@ import RefreshSVG from "../Icons/RefreshSVG";
 import VideoSVG from "../Icons/VideoSVG";
 import Scoring from "./Scoring";
 import {defaultHeart} from "../Classes/complecations";
-import {AdMobRewarded} from "expo-ads-admob";
+import {AdMobInterstitial} from "expo-ads-admob";
 
 export default function FailModal({ modalVisible, failRefreshHandler, onContinue, score, setScore}) {
     const [loaded] = useFonts({
@@ -21,26 +21,23 @@ export default function FailModal({ modalVisible, failRefreshHandler, onContinue
         }
     }, [score, setScore, onContinue]);
 
-    const initRewardAds = async () => {
+    const initRewardAds = useCallback(async () => {
         try{
-            await AdMobRewarded.requestAdAsync();
-            await AdMobRewarded.showAdAsync();
-        }catch (e) { }
-    };
-
-    const init = useCallback(async () => {
-        try{
-            await AdMobRewarded.setAdUnitID("ca-app-pub-1811884588047510/5018486836");
-        }catch (e) {
-        }
-
-        AdMobRewarded.addEventListener("rewardedVideoUserDidEarnReward", () =>{
+            await AdMobInterstitial.requestAdAsync();
+            await AdMobInterstitial.showAdAsync();
             onContinue();
-        });
+        }catch (e) { }
     }, [onContinue]);
 
+    const init =async () => {
+        try{
+            await AdMobInterstitial.setAdUnitID("ca-app-pub-1811884588047510/2967038565");
+        }catch (e) {
+        }
+    };
+
     const clearStates = useCallback(() => () => {
-        AdMobRewarded.removeAllListeners();
+        AdMobInterstitial.removeAllListeners();
     }, []);
 
     useEffect(init, []);
