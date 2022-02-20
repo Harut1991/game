@@ -7,7 +7,7 @@ import RefreshSVG from "../Icons/RefreshSVG";
 import VideoSVG from "../Icons/VideoSVG";
 import Scoring from "./Scoring";
 import {defaultHeart} from "../Classes/complecations";
-import {AdMobInterstitial} from "expo-ads-admob";
+import {AdMobRewarded} from "expo-ads-admob";
 
 export default function FailModal({ modalVisible, failRefreshHandler, onContinue, score, setScore}) {
     const [loaded] = useFonts({
@@ -21,23 +21,27 @@ export default function FailModal({ modalVisible, failRefreshHandler, onContinue
         }
     }, [score, setScore, onContinue]);
 
-    const initRewardAds = useCallback(async () => {
+    const initRewardAds = async () => {
         try{
-            await AdMobInterstitial.requestAdAsync();
-            await AdMobInterstitial.showAdAsync();
+            await AdMobRewarded.requestAdAsync();
+            await AdMobRewarded.showAdAsync();
             onContinue();
         }catch (e) { }
-    }, [onContinue]);
-
-    const init =async () => {
-        try{
-            await AdMobInterstitial.setAdUnitID("ca-app-pub-1811884588047510/2967038565");
-        }catch (e) {
-        }
     };
 
+    const init = useCallback(async () => {
+        try{
+            await AdMobRewarded.setAdUnitID("ca-app-pub-1811884588047510/5018486836");
+        }catch (e) {
+        }
+
+        AdMobRewarded.addEventListener("rewardedVideoUserDidEarnReward", () =>{
+            onContinue();
+        });
+    }, [onContinue]);
+
     const clearStates = useCallback(() => () => {
-        AdMobInterstitial.removeAllListeners();
+        AdMobRewarded.removeAllListeners();
     }, []);
 
     useEffect(init, []);
@@ -54,30 +58,30 @@ export default function FailModal({ modalVisible, failRefreshHandler, onContinue
                     <View style={styles.modalView}>
                         <ImageBackground source={Background} style={{width: '100%', height: '100%', borderRadius: 10, overflow: 'hidden'}} imageStyle={{resizeMode: 'cover'}}>
                             <View style={styles.main}>
-                                    <View style={{paddingTop: 30}}>
-                                        <View style={styles.c1}>
-                                            <Text style={{ paddingTop: 6, marginRight: 7}}><LineSVG /></Text>
-                                            {loaded && <Text style={{ fontSize: 24, fontFamily: "MochiyPopOne", color: '#FCAD51'}}>You Lost</Text>}
-                                            <Text  style={{ paddingTop: 6, marginLeft: 7}}><LineSVG /></Text>
+                                <View style={{paddingTop: 30}}>
+                                    <View style={styles.c1}>
+                                        <Text style={{ paddingTop: 6, marginRight: 7}}><LineSVG /></Text>
+                                        {loaded && <Text style={{ fontSize: 24, fontFamily: "MochiyPopOne", color: '#FCAD51'}}>You Lost</Text>}
+                                        <Text  style={{ paddingTop: 6, marginLeft: 7}}><LineSVG /></Text>
+                                    </View>
+                                    <View style={styles.c2}>
+                                        <View>
+                                            <Pressable onPress={failRefreshHandler}>
+                                                <RefreshSVG />
+                                            </Pressable>
                                         </View>
-                                        <View style={styles.c2}>
-                                            <View>
-                                                <Pressable onPress={failRefreshHandler}>
-                                                    <RefreshSVG />
-                                                </Pressable>
-                                            </View>
-                                            <View>
-                                                <Pressable onPress={initRewardAds}>
-                                                    <VideoSVG />
-                                                </Pressable>
-                                            </View>
-                                            <View>
-                                                <Pressable onPress={onScore}>
-                                                    <Scoring score={score} />
-                                                </Pressable>
-                                            </View>
+                                        <View>
+                                            <Pressable onPress={initRewardAds}>
+                                                <VideoSVG />
+                                            </Pressable>
+                                        </View>
+                                        <View>
+                                            <Pressable onPress={onScore}>
+                                                <Scoring score={score} />
+                                            </Pressable>
                                         </View>
                                     </View>
+                                </View>
                             </View>
                         </ImageBackground>
                     </View>
