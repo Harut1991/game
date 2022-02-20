@@ -28,7 +28,7 @@ export default function WinModal({ onClickNext, modalVisible, level }) {
                                             <Text  style={{ paddingTop: 6, marginLeft: 7}}><LineSVG /></Text>
                                         </View>
                                         <View style={styles.c2}>
-                                            <Text style={{ fontSize: 20,fontFamily: "MochiyPopOne", color: 'white'}}>Level {level+1}</Text>
+                                            <Text style={{ fontSize: 20,fontFamily: "MochiyPopOne", color: 'white'}}>Level {level > 75 ? 1: level+1}</Text>
                                             <Pressable onPress={onClickNext}>
                                                 <Text style={{ fontSize: 25, fontFamily: "MochiyPopOne", color: '#FCAD51', paddingTop: 40}}>Next</Text>
                                             </Pressable>

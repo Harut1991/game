@@ -10,14 +10,14 @@ import Start from "./src/Containers/Start";
 import Game from "./src/Containers/Game";
 import {useFonts} from "expo-font";
 import {
-    AdMobInterstitial, AdMobRewarded
+    AdMobInterstitial
 } from "expo-ads-admob";
 
 const {width, height} = Dimensions.get('window');
 
 export default function App() {
     const {getData, storeData} = useStorage();
-    const [score, setScore] = useState(0);
+    const [score, setScore] = useState(null);
     const [loaded] = useFonts({
         MochiyPopOne: require('./assets/MochiyPopOne-Regular.ttf'),
     });
@@ -35,7 +35,7 @@ export default function App() {
     }, [setCurrentLevel, level]);
 
     const onNext = useCallback(()=>{
-        setCurrentLevel(currentLevel+1);
+        setCurrentLevel(currentLevel > 75 ? 1: currentLevel+1);
         const newScore = score + restTime;
         setScore(newScore);
         setAddRow(false);
@@ -56,7 +56,7 @@ export default function App() {
             const score = await getData('score');
             const lev = await getData('level');
             setEffect(sound === 'true');
-            setScore(score || 0);
+            setScore(score ? +score : 0);
             setLevel(lev && lev > 0 ? +lev: 1);
         }catch (e) { }
     }, [setEffect, setScore, setLevel]);
@@ -77,8 +77,17 @@ export default function App() {
       }
     }, [currentLevel, currentLevel]);
 
+    const scoreChangeHandler = useCallback(async () => {
+        if (score !== null && score !==undefined && score >= 0) {
+            try{
+                await storeData('score', score.toString());
+            }catch (e) { }
+        }
+    }, [score]);
+
     useEffect(onInit, []);
     useEffect(currentLevelChangeHandler, [currentLevel]);
+    useEffect(scoreChangeHandler, [score]);
 
     return (
       <View style={styles.container}>

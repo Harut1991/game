@@ -8,7 +8,7 @@ import RefreshSVG from "../Icons/RefreshSVG";
 import AddRowSVG from "../Icons/AddRowSVG";
 import { Audio } from 'expo-av';
 import Scoring from "./Scoring";
-import {AdMobRewarded} from "expo-ads-admob";
+import {AdMobInterstitial} from "expo-ads-admob";
 
 export default function Header({score, level, effect, setEffect, setAddRow, addRow, setRefresh}) {
     const {getData, storeData} = useStorage();
@@ -49,12 +49,13 @@ export default function Header({score, level, effect, setEffect, setAddRow, addR
         }
     }, [sound, music]);
 
-    const initRewardAds = async () => {
+    const initRewardAds = useCallback(async () => {
         try{
-            await AdMobRewarded.requestAdAsync();
-            await AdMobRewarded.showAdAsync();
+            await AdMobInterstitial.requestAdAsync();
+            await AdMobInterstitial.showAdAsync();
+            setAddRow(true);
         }catch (e) { }
-    };
+    }, [setAddRow]);
 
     const init = useCallback(async () => {
         try{
@@ -66,14 +67,11 @@ export default function Header({score, level, effect, setEffect, setAddRow, addR
             setMusic(sound);
             const canS = (await getData('sound')) === 'true';
             setSound(canS);
-            await AdMobRewarded.setAdUnitID("ca-app-pub-3940256099942544/5224354917");
+            await AdMobInterstitial.setAdUnitID("ca-app-pub-1811884588047510/2967038565");
         }catch (e) {
             console.log(e);
         }
-        AdMobRewarded.addEventListener("rewardedVideoUserDidEarnReward", () =>{
-            setAddRow(true);
-        });
-    }, [setMusic, sound, getData, setSound, setAddRow]);
+    }, [setMusic, sound, getData, setSound]);
 
     useEffect(soundChangeHandler, [sound, music]);
     useEffect(init, []);

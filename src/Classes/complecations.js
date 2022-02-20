@@ -1,10 +1,10 @@
-export const defaultHeart = 600;
+export const defaultHeart = 1900;
 export const complications =  [
     {
         level: [1, 2],
         flaskCount:2,
         ballCount:2,
-        time: 60
+        time: 30
     },
     {
         level: [2, 3],
@@ -16,7 +16,7 @@ export const complications =  [
         level: [3, 4],
         flaskCount:3,
         ballCount:3,
-        time: 210,
+        time: 190,
         addRow: true
     },
     {
@@ -30,14 +30,14 @@ export const complications =  [
         level: [5, 6],
         flaskCount:3,
         ballCount:5,
-        time: 400,
+        time: 350,
         addRow: true
     },
     {
         level: [6, 7],
         flaskCount:3,
         ballCount:6,
-        time: 450,
+        time: 400,
         addRow: true
     },
     {
@@ -51,42 +51,42 @@ export const complications =  [
         level: [8, 9],
         flaskCount:4,
         ballCount:3,
-        time: 200,
+        time: 180,
         addRow: true
     },
     {
         level: [9, 10],
         flaskCount:4,
         ballCount:4,
-        time: 300,
+        time: 270,
         addRow: true
     },
     {
         level: [10, 11],
         flaskCount:4,
         ballCount:5,
-        time: 350,
+        time: 320,
         addRow: true
     },
     {
         level: [11, 12],
         flaskCount:4,
         ballCount:6,
-        time: 400,
+        time: 370,
         addRow: true
     },
     {
         level: [12, 13],
         flaskCount:4,
         ballCount:7,
-        time: 500,
+        time: 420,
         addRow: true
     },
     {
         level: [13, 14],
         flaskCount:4,
         ballCount:8,
-        time: 550,
+        time: 480,
         addRow: true
     },
     {
@@ -100,14 +100,14 @@ export const complications =  [
         level: [15, 16],
         flaskCount:5,
         ballCount:3,
-        time: 250,
+        time: 200,
         addRow: true
     },
     {
         level: [16, 17],
         flaskCount:5,
         ballCount:4,
-        time: 350,
+        time: 280,
         addRow: true
     },
     {
@@ -121,21 +121,21 @@ export const complications =  [
         level: [18, 19],
         flaskCount:6,
         ballCount:3,
-        time: 250,
+        time: 220,
         addRow: true
     },
     {
         level: [19, 20],
         flaskCount:6,
         ballCount:4,
-        time: 300,
+        time: 270,
         addRow: true
     },
     {
         level: [20, 21],
         flaskCount:6,
         ballCount:5,
-        time: 360,
+        time: 300,
         addRow: true
     },
     {
@@ -149,14 +149,14 @@ export const complications =  [
         level: [22, 23],
         flaskCount:7,
         ballCount:3,
-        time: 250,
+        time: 180,
         addRow: true
     },
     {
         level: [23, 24],
         flaskCount:7,
         ballCount:4,
-        time: 350,
+        time: 300,
         addRow: true
     },
     {
@@ -177,49 +177,49 @@ export const complications =  [
         level: [26, 27],
         flaskCount:8,
         ballCount:3,
-        time: 300,
+        time: 220,
         addRow: true
     },
     {
         level: [27, 28],
         flaskCount:8,
         ballCount:4,
-        time: 400,
+        time: 260,
         addRow: true
     },
     {
         level: [28, 29],
         flaskCount:8,
         ballCount:5,
-        time: 500,
+        time: 350,
         addRow: true
     },
     {
         level: [29, 30],
         flaskCount:3,
         ballCount:3,
-        time: 150,
+        time: 170,
         addRow: true
     },
     {
         level: [30, 31],
         flaskCount:3,
         ballCount:4,
-        time: 350,
+        time: 250,
         addRow: true
     },
     {
         level: [31, 32],
         flaskCount:3,
         ballCount:5,
-        time: 400,
+        time: 320,
         addRow: true
     },
     {
         level: [32, 33],
         flaskCount:3,
         ballCount:6,
-        time: 500,
+        time: 400,
         addRow: true
     },
     {
@@ -240,56 +240,56 @@ export const complications =  [
         level: [35, 37],
         flaskCount:4,
         ballCount:4,
-        time: 350,
+        time: 320,
         addRow: true
     },
     {
         level: [37, 39],
         flaskCount:4,
         ballCount:5,
-        time: 500,
+        time: 380,
         addRow: true
     },
     {
         level: [39, 41],
         flaskCount:4,
         ballCount:6,
-        time: 600,
+        time: 470,
         addRow: true
     },
     {
         level: [41, 43],
         flaskCount:4,
         ballCount:7,
-        time: 650,
+        time: 500,
         addRow: true
     },
     {
         level: [43, 45],
         flaskCount:4,
         ballCount:8,
-        time: 750,
+        time: 550,
         addRow: true
     },
     {
         level: [45, 47],
         flaskCount:5,
         ballCount:3,
-        time: 300,
+        time: 250,
         addRow: true
     },
     {
         level: [47, 49],
         flaskCount:5,
         ballCount:4,
-        time: 350,
+        time: 320,
         addRow: true
     },
     {
         level: [49, 51],
         flaskCount:5,
         ballCount:5,
-        time: 450,
+        time: 380,
         addRow: true
     },
     {
@@ -303,63 +303,63 @@ export const complications =  [
         level: [53, 55],
         flaskCount:6,
         ballCount:3,
-        time: 300,
+        time: 290,
         addRow: true
     },
     {
         level: [55, 57],
         flaskCount:6,
         ballCount:4,
-        time: 450,
+        time: 330,
         addRow: true
     },
     {
         level: [57, 59],
         flaskCount:6,
         ballCount:5,
-        time: 550,
+        time: 450,
         addRow: true
     },
     {
         level: [59, 61],
         flaskCount:7,
         ballCount:2,
-        time: 200,
+        time: 190,
         addRow: true
     },
     {
         level: [61, 63],
         flaskCount:7,
         ballCount:3,
-        time: 400,
+        time: 300,
         addRow: true
     },
     {
         level: [63, 65],
         flaskCount:7,
         ballCount:4,
-        time: 450,
+        time: 390,
         addRow: true
     },
     {
         level: [65, 67],
         flaskCount:7,
         ballCount:5,
-        time: 600,
+        time: 460,
         addRow: true
     },
     {
         level: [67, 69],
         flaskCount:8,
         ballCount:2,
-        time: 200,
+        time: 210,
         addRow: true
     },
     {
         level: [69, 71],
         flaskCount:8,
         ballCount:3,
-        time: 350,
+        time: 390,
         addRow: true
     },
     {
@@ -370,9 +370,9 @@ export const complications =  [
         addRow: true
     },
     {
-        level: [73, 75],
-        flaskCount:8,
-        ballCount:5,
+        level: [73, 77],
+        flaskCount:2,
+        ballCount:2,
         time: 700,
         addRow: true
     }

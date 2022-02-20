@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "newGG",
-    "slug": "newGG",
-    "version": "1.0.0",
+    "name": "Math Cubes Plus",
+    "slug": "mathCubesPlus",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -21,13 +21,15 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon-game.png",
         "backgroundColor": "#FFFFFF"
       },
       "config": {
-        "googleMobileAdsAppId": "ca-app-pub-7692831263163010~6089503308"
+        "googleMobileAdsAppId": "ca-app-pub-1811884588047510~9426126396"
       },
-      "package": "and.json"
+      "versionCode": 3,
+	"permissions": [],
+      "package": "mathCubesPlus.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"

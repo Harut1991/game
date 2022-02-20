@@ -30,7 +30,7 @@ export default function FailModal({ modalVisible, failRefreshHandler, onContinue
 
     const init = useCallback(async () => {
         try{
-            await AdMobRewarded.setAdUnitID("ca-app-pub-3940256099942544/5224354917");
+            await AdMobRewarded.setAdUnitID("ca-app-pub-1811884588047510/5018486836");
         }catch (e) {
         }
 

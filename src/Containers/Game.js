@@ -43,8 +43,10 @@ export default function Game({level, onNext, effect, addRow, totalRow, onRefresh
     const setJumpMusicHandler = useCallback(async () => {
         try{
             await jumpM.stopAsync();
-            if (jump && effect && jumpM)
+            setTimeout(async ()=> {
+                if (jump && effect && jumpM)
                     await jumpM.playAsync();
+            });
         } catch (e) { }
     }, [jump, effect, jumpM]);
 
@@ -63,7 +65,7 @@ export default function Game({level, onNext, effect, addRow, totalRow, onRefresh
                 await rowM.playAsync();
         } catch (e) { }
     }, [rowFill, effect, rowM]);
-    
+
     const init = useCallback(()=> {
         setOldCheckedData({});
         setCheckedData({});

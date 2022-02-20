@@ -7,7 +7,7 @@ export default function Footer() {
         <View style={{width: '100%'}}>
             <AdMobBanner
                 bannerSize="fullBanner"
-                adUnitID="ca-app-pub-3940256099942544/6300978111"
+                adUnitID="ca-app-pub-1811884588047510/8113044720"
             />
         </View>
     );
